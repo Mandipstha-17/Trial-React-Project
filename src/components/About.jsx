@@ -11,6 +11,7 @@ const About = () => {
     product,
     allProduct,
     editProduct,
+    deleteProduct,
   } = context;
   const [menuVisible, setMenuVisible] = useState(false);
   const [modalVisible, setModalVisibel] = useState(false);
@@ -37,7 +38,7 @@ const About = () => {
   };
   const handleDelete = async (id) => {
     console.log("deleting product");
-    // await deleteProduct(id)
+    await deleteProduct(id);
   };
   useEffect(() => {
     allProduct();
@@ -59,7 +60,6 @@ const About = () => {
                       src={item.img}
                       className="card-img-top"
                       alt="card image"
-                      height={350}
                     />
                     <div className="card-body">
                       <div className="card-title">

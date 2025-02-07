@@ -1,53 +1,43 @@
 import React, { useReducer, useState } from "react";
 import productContext from "./ProductContext";
 import { cartReducer } from "./Reducer";
-import hoodie1 from "../assets/green-hoodie.jpg";
-import tshirt1 from "../assets/green-tshirt.jpg";
-import buff from "../assets/buff-jacket.jpg";
-import women from "../assets/womens-coat.png";
-
-const initialProducts = [
-  {
-    _id: 1,
-    title: "Green hoodie",
-    description: "Comfy and cool green hoodie.",
-    price: 2500,
-    instock: 5,
-    img: hoodie1,
-  },
-  {
-    _id: 2,
-    title: "Green plain tshirt",
-    description: "Comfy and cool green t-shirt.",
-    price: 1500,
-    instock: 7,
-    img: tshirt1,
-  },
-  {
-    _id: 3,
-    title: "Mens Buffer Jacket",
-    description: "Comfy and cool buffer jacket.",
-    price: 4500,
-    instock: 5,
-    img: buff,
-  },
-  {
-    _id: 4,
-    title: "Womens Coat",
-    description: "Comfy and cool women's coat.",
-    price: 5000,
-    instock: 5,
-    img: women,
-  },
-];
 
 const ProductState = (props) => {
-  const [product, setProduct] = useState(initialProducts); // Corrected this line
+  const prod = [
+    {
+      _id: 1,
+      title: "sweater",
+      description: "this is a woolen sweater",
+      price: 1000,
+      instock: 10,
+    },
+    {
+      _id: 2,
+      title: "jeans",
+      description: "blue jeans",
+      price: 500,
+      instock: 5,
+    },
+    {
+      _id: 3,
+      title: "tshirt ",
+      description: "summer shirt",
+      price: 400,
+      instock: 5,
+    },
+    {
+      _id: 4,
+      title: "cap ",
+      description: "summer cap",
+      price: 400,
+      instock: 5,
+    },
+  ];
+  const [product, setProduct] = useState(prod);
   const [state, dispatch] = useReducer(cartReducer, {
     products: product,
     cart: [],
   });
-
   const allProduct = async () => {
     const response = await fetch(
       "http://localhost:3000/api/product/getallproduct", //dummy api
@@ -63,7 +53,6 @@ const ProductState = (props) => {
     console.log(data);
     setProduct(data);
   };
-
   const editProduct = async (selectedProduct, updateData) => {
     console.log("edit product", selectedProduct);
     const { title, description, price, instock } = updateData;
@@ -89,9 +78,39 @@ const ProductState = (props) => {
     }
   };
 
+  const deleteProduct = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/product/deleteproduct/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("product deleted succesfully!");
+      } else {
+        console.log("failed to delete the product");
+      }
+      allProduct();
+    } catch (error) {
+      console.error("internal server error");
+    }
+  };
+
   return (
     <productContext.Provider
-      value={{ product, state, dispatch, allProduct, editProduct }}
+      value={{
+        product,
+        state,
+        dispatch,
+        allProduct,
+        editProduct,
+        deleteProduct,
+      }}
     >
       {props.children}
     </productContext.Provider>
