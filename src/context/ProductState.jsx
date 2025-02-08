@@ -1,36 +1,45 @@
 import React, { useReducer, useState } from "react";
 import productContext from "./ProductContext";
 import { cartReducer } from "./Reducer";
+import hoodie from "../assets/green-hoodie.jpg"
+import tshirt from "../assets/green-tshirt.jpg"
+import buff from "../assets/buff-jacket.jpg"
+import coat from "../assets/womens-coat.png"
+
 
 const ProductState = (props) => {
   const prod = [
     {
       _id: 1,
-      title: "sweater",
-      description: "this is a woolen sweater",
+      title: "Green Hoodie",
+      description: "this is a plain green hoodie",
       price: 1000,
       instock: 10,
+      img: hoodie,
     },
     {
       _id: 2,
-      title: "jeans",
-      description: "blue jeans",
+      title: "Green Tshirt",
+      description: "this is a plain green Tshirt",
       price: 500,
       instock: 5,
+      img: tshirt,
     },
     {
       _id: 3,
-      title: "tshirt ",
-      description: "summer shirt",
+      title: "buffer jacket ",
+      description: "this is buffer jacket",
       price: 400,
       instock: 5,
+      img: buff,
     },
     {
       _id: 4,
-      title: "cap ",
-      description: "summer cap",
+      title: "Womens Coat",
+      description: "this is women coat",
       price: 400,
       instock: 5,
+      img: coat,
     },
   ];
   const [product, setProduct] = useState(prod);

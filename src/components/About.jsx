@@ -60,6 +60,7 @@ const About = () => {
                       src={item.img}
                       className="card-img-top"
                       alt="card image"
+                      height={350}
                     />
                     <div className="card-body">
                       <div className="card-title">
