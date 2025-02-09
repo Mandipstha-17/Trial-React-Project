@@ -3,6 +3,7 @@ import s1 from "../assets/form.jpg";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -12,7 +13,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password } = credentials;
-    const response = await fetch("", {
+    const response = await fetch("http://localhost:5000/api/auth/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,6 +24,10 @@ const Signup = () => {
     const data = await response.json();
 
     console.log("form submitted", data);
+    if (data) {
+      localStorage.setItem("token", data.authToken);
+      navigate("/login");
+    }
   };
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });

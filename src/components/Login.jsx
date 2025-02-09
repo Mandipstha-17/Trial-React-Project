@@ -3,6 +3,7 @@ import s1 from "../assets/form1.jpg";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -10,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = credentials;
-    const response = await fetch("", {
+    const response = await fetch("http://localhost:5000/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,6 +22,10 @@ const Login = () => {
     const data = await response.json();
 
     console.log("form submitted", data);
+    if (data) {
+      localStorage.setItem("token", data.authToken);
+      navigate("/");
+    }
   };
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });

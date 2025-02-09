@@ -49,7 +49,7 @@ const ProductState = (props) => {
   });
   const allProduct = async () => {
     const response = await fetch(
-      "http://localhost:3000/api/product/getallproduct", //dummy api
+      "http://localhost:5000/api/product/getallproduct", //dummy api
       {
         method: "GET",
         headers: {
